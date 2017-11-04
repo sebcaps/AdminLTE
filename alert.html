@@ -35,7 +35,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- jQuery 3 -->
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
+  <script type="text/javascript" src="../../domosBoot/domosboot/vendor/jquery/jquery-2.2.1.min.js"></script>
   
   <script type="text/javascript">
     $(document)
@@ -44,6 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $("#topmenu").load("topmenu.html");
         $("#leftmenu").load("leftmenu.html", function () {
           $("[data-widget='tree']").tree();
+          activeMenu();
         });
       });
   </script>
@@ -132,13 +134,14 @@ desired effect
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
   <!--  bootStrapTable-->
-  <script src="../../domosBoot/vendor/bootStrapTable/bootstrap-table.min.js"></script>
-
+  <!-- <script src="../../domosBoot/domosboot/vendor/bootStrapTable/bootstrap-table.min.js"></script> -->
+  
+  <script type="text/javascript" src="menuActive.js"></script>
   <script type="text/javascript">
     // moment.locale('fr');
     var $sensorStat = $('#sensorAlertTable').bootstrapTable({
       // url: 'dataFloor.json',
-      url: '../../domosBoot/php/CRUD_Alerts.php?actionfunction=showLastData',
+      url: '../../domosBoot/domosboot/php/CRUD_Alerts.php?actionfunction=showLastData',
       onExpandRow: function (index, row, $detail) {
         expandTable($detail, row);
       }
@@ -176,7 +179,7 @@ desired effect
 
       $el.bootstrapTable({
         columns: columns,
-        url: '../../domosBoot/php/CRUD_Alerts.php?actionfunction=fullData&id=' + rowParent.sensor_id,
+        url: '../../domosBoot/domosboot/php/CRUD_Alerts.php?actionfunction=fullData&id=' + rowParent.sensor_id,
         detailView: false,
         pageSize: 5,
         pagination: true,

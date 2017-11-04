@@ -28,6 +28,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script type="text/javascript" src="../../domosBoot/vendor/jquery/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="../../domosBoot/domosboot/vendor/jquery/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="menuActive.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -43,6 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $("#topmenu").load("topmenu.html");
         $("#leftmenu").load("leftmenu.html", function () {
           $("[data-widget='tree']").tree();
+          activeMenu();
         });
       });
   </script>
@@ -135,7 +138,7 @@ desired effect
 
 
   <!--  bootStrapTable-->
-  <script src="../../domosBoot/vendor/bootStrapTable/bootstrap-table.min.js"></script>
+  <script src="../../domosBoot/domosboot/vendor/bootStrapTable/bootstrap-table.min.js"></script>
   <script src="dist/js/adminlte.js"></script>
   <script type="text/javascript">
     // moment.locale('fr');
