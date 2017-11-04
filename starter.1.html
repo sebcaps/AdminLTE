@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
+  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/skins/skin-green.min.css">
+
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script type="text/javascript" src="../../domosBoot/vendor/jquery/jquery-2.2.1.min.js"></script>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- AdminLTE App -->
+
+  <script type="text/javascript">
+    $(document)
+      .ready(
+      function () {
+        $("#topmenu").load("topmenu.html");
+        $("#leftmenu").load("leftmenu.html", function () {
+          $("[data-widget='tree']").tree();
+        });
+      });
+  </script>
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+
+
+<body class="hold-transition skin-blue  sidebar-mini">
+  <div class="wrapper">
+    <!-- Main Header -->
+    <div id='topmenu'> </div>
+    <div id="leftmenu"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Statistiques
+          <small>Optional description</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="#">
+              <i class="fa fa-dashboard"></i> Statistiques</a>
+          </li>
+          <li class="active">Disponibilité</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content container-fluid">
+        <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+        <table id="sensorAlertTable" data-show-refresh="false" data-show-columns="false" data-search="false" data-detail-view="true"
+          class='table-striped table-bordered table-responsive'>
+          <thead>
+            <tr>
+              <th data-field="id" data-visible="false">Id</th>
+              <th data-field='room'>Pièce</th>
+              <th data-field="adress">Adresse</th>
+              <th data-field="status" data-formatter="statusFormatter" data-align="center">Statut Courant</th>
+              <th data-field="date" data-formatter="dateFormatter">Date dernier Statut</th>
+            </tr>
+          </thead>
+        </table>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+    </footer>
+    <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED JS SCRIPTS -->
+
+  <!-- jQuery 3 -->
+  <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
+  <!-- Bootstrap 3.3.7 -->
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+  <!--  bootStrapTable-->
+  <script src="../../domosBoot/vendor/bootStrapTable/bootstrap-table.min.js"></script>
+  <script src="dist/js/adminlte.js"></script>
+  <script type="text/javascript">
+    // moment.locale('fr');
+    var $sensorStat = $('#sensorAlertTable').bootstrapTable({
+      // url: 'dataFloor.json',
+      url: '../../domosBoot/php/CRUD_Alerts.php?actionfunction=showLastData',
+      onExpandRow: function (index, row, $detail) {
+        expandTable($detail, row);
+      }
+    });
+    function expandTable($detail, parent) {
+      buildTable($detail.html('<table></table>').find('table'), parent);
+    }
+    function buildTable($el, rowParent) {
+      columns = [
+        {
+          field: 'id',
+          title: 'id',
+          visible: false
+        },
+        {
+          field: 'room',
+          title: 'pièce',
+          visible: false
+        },
+        {
+          field: 'status',
+          title: 'Statut',
+          sortable: true,
+          formatter: 'statusFormatter',
+          align: 'center'
+        },
+        {
+          field: 'date',
+          sortable: true, //FIXME don't work !
+          title: 'Date',
+          formatter: 'dateFormatter'
+        }
+      ]
+      $el.addClass('table-striped table-bordered table-responsive');
+
+      $el.bootstrapTable({
+        columns: columns,
+        url: '../../domosBoot/php/CRUD_Alerts.php?actionfunction=fullData&id=' + rowParent.sensor_id,
+        detailView: false,
+        pageSize: 5,
+        pagination: true,
+        pageList: [5]
+      });
+    }
+    function statusFormatter(value) {
+      if (value == "1") { //1 = alerte
+        return "<div class='sensor-alert-danger fa fa-exclamation-triangle fa-2x'/>"
+      } else if (value != null) {
+        return "<div class='sensor-alert-sucess fa fa-check fa-2x'/>"
+      } else {
+        return "<div class='sensor-alert-unknown fa fa-question fa-2x'/>"
+      }
+    }
+    function dateFormatter(value) {
+      // if (value != null) {
+      //   var evtDate = moment(value);
+      //   return " <div> " + evtDate.format('LLL') + " (" + evtDate.fromNow() + ")</div> ";
+      // } else {
+      //   return "<div> No Data </div>"
+      // }
+      return value;
+    }
+  </script>
+  <!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+</body>
+
+</html>
